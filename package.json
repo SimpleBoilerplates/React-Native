@@ -1,0 +1,44 @@
+{
+  "name": "BooksDemo",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "reset-start": "npm start -- --reset-cache",
+    "clean": "rm -rf $TMPDIR/react-* && watchman watch-del-all && npm cache clean",
+    "clean-start": "npm run clean && npm run rc-start",
+    "fresh-install": "rm -rf $TMPDIR/react-* && watchman watch-del-all && rm -rf ios/build/ModuleCache/* && rm -rf node_modules/ && npm cache clean && npm install",
+    "fresh-start": "npm run fresh-install && npm run rc-start",
+    "tron": "node_modules/.bin/reactotron"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "native-base": "^2.11.0",
+    "react": "16.6.3",
+    "react-native": "^0.58.5",
+    "react-native-config": "^0.11.7",
+    "react-native-elements": "^1.0.0",
+    "react-navigation": "^3.2.1",
+    "styled-components": "^4.1.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "24.1.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-react-native": "^5",
+    "babel-runtime": "^6.26.0",
+    "eslint": "^5.14.1",
+    "eslint-plugin-react-native": "^3.6.0",
+    "jest": "24.1.0",
+    "metro-react-native-babel-preset": "0.51.1",
+    "prop-types": "^15.6.2",
+    "react-dom": "16.8.1",
+    "react-test-renderer": "16.6.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
