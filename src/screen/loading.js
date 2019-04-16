@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View,ActivityIndicator,StyleSheet,AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
+import { View,ActivityIndicator,StyleSheet } from 'react-native';
 import { colors } from '../shared/constant/constant';
 export default class LoadingPage extends Component {
   constructor(props){

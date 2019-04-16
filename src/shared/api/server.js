@@ -1,7 +1,10 @@
+'use strict';
+
+
 import {url} from '../constant/credential';
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
 import to from 'await-to-js';
+import AsyncStorage from '@react-native-community/async-storage';
 
 async function _get(url){
     let token = await AsyncStorage.getItem('token');

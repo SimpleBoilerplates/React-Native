@@ -10,8 +10,7 @@
 import React, { Component } from 'react';
 import {  StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements'
-import { createStackNavigator } from 'react-navigation';
-import { AsyncStorage } from "react-native";
+import {_get,_post} from '../shared/api/server';
 
 export default class Home extends Component {
 
@@ -19,18 +18,26 @@ export default class Home extends Component {
         title: 'Books',
       };
     
-      constructor(props) {
-        super(props);
-        this.state = {
-            loading: true,
-            results: {
-                items: []
-            }
+    //   constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         results: {
+    //             items: []
+    //         }
+    //     }
+    // }
+
+    state={
+        ...basicState,
+        results: {
+            items: []
         }
+    }
+    async componentWillMount(){
+        bindAll(this);  
     }
 
     componentDidMount() {
-        var that = this;
         this._getFood();
     }
 
@@ -40,14 +47,15 @@ export default class Home extends Component {
         console.log("_retrieveFood")
         let that = this;
         try {
-           let value = await AsyncStorage.getItem(that._getCurrentDate());
+            this.loading();
+            let value = await _get(`/books`);
            if (value != null){
                console.log("_retrieveFood")
                //console.log(value)
-            that.setState({
-                results: JSON.parse(value),
-                loading: false
-            });
+               that.notLoading();
+               that.setState({
+                results: JSON.parse(value)
+                        });
            }
         } catch (error) {
             console.log(error)
@@ -64,7 +72,12 @@ export default class Home extends Component {
     )
 
     render() {
-        const { navigation } = this.props;
+
+        if(this.state.loading){
+            return (<View style={styles.login}>
+                    <ActivityIndicator size="large" color={colors.YELLOW}></ActivityIndicator>
+                </View>);
+        }else{
         return ( 
             <View >
     
@@ -75,6 +88,7 @@ export default class Home extends Component {
     />
         </View>
         );
+        }
     }
 }
 

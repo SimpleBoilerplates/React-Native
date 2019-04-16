@@ -23,7 +23,7 @@ const sizes = {
     WH,
     WW
 }
-flexCenter = StyleSheet.create({
+const flexCenter = StyleSheet.create({
     center:{
         display:'flex',
         alignItems: 'center',

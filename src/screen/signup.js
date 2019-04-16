@@ -1,5 +1,6 @@
 'use strict';
 
+
 import React, { Component } from 'react'
 import AsyncStorage from '@react-native-community/async-storage';
 import { Text, View,StyleSheet,TextInput,Keyboard,ActivityIndicator } from 'react-native'
@@ -10,9 +11,10 @@ import axios from 'axios';
 import to from 'await-to-js';
 import { Button } from 'react-native-elements';
 
-export default class Login extends Component {
+export default class SignUp extends Component {
     state={
         ...basicState,
+        name: "",
         userName:"",
         password:""
     }
@@ -20,19 +22,16 @@ export default class Login extends Component {
         bindAll(this);  
     }
 
-    _signUp () {
-        this.props.navigation.navigate('SignUpScreen');
-    }
-
-    _login=async ()=>{
+    _signUp=async ()=>{
         if(!this.state.userName && !this.state.password) return false;
         this.loading();
         let payload = {
+            name: this.state.name.toLowerCase(),
             email: this.state.userName.toLowerCase(),
             password: this.state.password.toLowerCase()
         }
 
-        let [logerr,logged] = await to(axios.get(`${url}/login`));
+        let [logerr,logged] = await to(axios.get(`${url}/signup`));
         this.notLoading();
         console.log(logerr,logged);
         if(logerr){
@@ -48,7 +47,8 @@ export default class Login extends Component {
             return (<View style={styles.login}>
                     <ActivityIndicator size="large" color={colors.YELLOW}></ActivityIndicator>
                 </View>);
-        }else{ return (
+        }
+        return (
         <View style ={styles.login}>
             <Text style={styles.smallText}>Username</Text>
             <TextInput
@@ -60,12 +60,10 @@ export default class Login extends Component {
             style={styles.text}
             secureTextEntry={true}
             onChangeText={password=>this.setState({password})} onBlur={e=>Keyboard.dismiss()}></TextInput>
-           <Button   title="Log In" onPress={this._login}/>
-           <Button   title="Sign Up" onPress={this._signUp}/>
+           <Button title="Sign Up" onPress={this._signUp}/>
 
         </View>
         )
-        }
     }
 }
 const cw = Math.floor(sizes.WW*0.9);

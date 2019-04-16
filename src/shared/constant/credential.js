@@ -1,2 +1,2 @@
-const url = `https://th-foodapp.herokuapp.com/api`;
+const url = `https://booksdemo.herokuapp.com`;
 export {url}
