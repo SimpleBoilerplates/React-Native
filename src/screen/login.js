@@ -10,8 +10,7 @@ import axios from 'axios';
 import to from 'await-to-js';
 import { Button } from 'react-native-elements';
 
-type Props = {};
-export default class LoginScreen extends Component < Props > {
+export default class LoginScreen extends Component {
 
       constructor(props) {
         super(props);
@@ -22,7 +21,6 @@ export default class LoginScreen extends Component < Props > {
         }
     }
 
-   
     async componentWillMount(){
         bindAll(this);  
     }
