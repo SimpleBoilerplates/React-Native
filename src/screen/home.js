@@ -12,7 +12,7 @@ import {  StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements'
 import {_get,_post} from '../shared/api/server';
 
-export default class Home extends Component {
+export default class HomeScreen extends Component {
 
     static navigationOptions = {
         title: 'Books',

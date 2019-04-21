@@ -10,18 +10,25 @@ import axios from 'axios';
 import to from 'await-to-js';
 import { Button } from 'react-native-elements';
 
-export default class Login extends Component {
-    state={
-        ...basicState,
-        userName:"",
-        password:""
+type Props = {};
+export default class LoginScreen extends Component < Props > {
+
+      constructor(props) {
+        super(props);
+        this.state={
+            ...basicState,
+            userName:"",
+            password:""
+        }
     }
+
+   
     async componentWillMount(){
         bindAll(this);  
     }
 
     _signUp () {
-        this.props.navigation.navigate('SignUpScreen');
+        this.props.navigation.navigate('SignUp');
     }
 
     _login=async ()=>{
@@ -40,7 +47,7 @@ export default class Login extends Component {
         }
         else{
             let saved = await AsyncStorage.setItem('token',tok);
-            this.props.navigation.navigate('MainScreen');
+            this.props.navigation.navigate('Main');
         }
     }
     render() {
@@ -60,9 +67,9 @@ export default class Login extends Component {
             style={styles.text}
             secureTextEntry={true}
             onChangeText={password=>this.setState({password})} onBlur={e=>Keyboard.dismiss()}></TextInput>
-           <Button   title="Log In" onPress={this._login}/>
-           <Button   title="Sign Up" onPress={this._signUp}/>
-
+           <Button  title="Log In" onPress={this._login}/>
+           <Button  title="Sign Up" onPress={() => this._signUp() }/>
+  
         </View>
         )
         }
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center',
         height:'100%',
-        backgroundColor:colors.BLUE
+        backgroundColor:colors.WHITE
     },
     smallText:{
         color:colors.WHITE,
@@ -83,7 +90,7 @@ const styles = StyleSheet.create({
         marginBottom:10
     },
     text:{
-        borderColor: colors.GRAY,
+        borderColor: colors.BLACK,
         fontSize:Math.floor(sizes.BASE_FONT*1.3),
         padding: 8,
         width:cw,

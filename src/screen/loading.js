@@ -11,7 +11,7 @@ export default class LoadingPage extends Component {
   }
   _bootstrap = async()=>{
     let token = await AsyncStorage.getItem('token');
-    this.props.navigation.navigate(token?'MainScreen':'Login');
+    this.props.navigation.navigate(token?'App':'Auth');
   }
   render() {
     return (
@@ -28,6 +28,6 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent:"center",
         height:"100%",
-        backgroundColor:colors.YELLOW
+        backgroundColor:colors.WHITE
     }
 })

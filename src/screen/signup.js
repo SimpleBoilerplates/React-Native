@@ -11,7 +11,7 @@ import axios from 'axios';
 import to from 'await-to-js';
 import { Button } from 'react-native-elements';
 
-export default class SignUp extends Component {
+export default class SignUpScreen extends Component {
     state={
         ...basicState,
         name: "",
@@ -20,6 +20,10 @@ export default class SignUp extends Component {
     }
     async componentWillMount(){
         bindAll(this);  
+    }
+
+    _login (){
+        this.props.navigation.goBack();
     }
 
     _signUp=async ()=>{
@@ -39,7 +43,7 @@ export default class SignUp extends Component {
         }
         else{
             let saved = await AsyncStorage.setItem('token',tok);
-            this.props.navigation.navigate('MainScreen');
+            this.props.navigation.navigate('Main');
         }
     }
     render() {
@@ -47,7 +51,7 @@ export default class SignUp extends Component {
             return (<View style={styles.login}>
                     <ActivityIndicator size="large" color={colors.YELLOW}></ActivityIndicator>
                 </View>);
-        }
+        }else
         return (
         <View style ={styles.login}>
             <Text style={styles.smallText}>Username</Text>
@@ -61,7 +65,7 @@ export default class SignUp extends Component {
             secureTextEntry={true}
             onChangeText={password=>this.setState({password})} onBlur={e=>Keyboard.dismiss()}></TextInput>
            <Button title="Sign Up" onPress={this._signUp}/>
-
+           <Button title="Log In" onPress={() => this._login() }/>
         </View>
         )
     }
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent:'center',
         height:'100%',
-        backgroundColor:colors.BLUE
+        backgroundColor:colors.WHITE
     },
     smallText:{
         color:colors.WHITE,
