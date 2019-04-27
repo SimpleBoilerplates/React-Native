@@ -27,7 +27,7 @@ export default class LoginScreen extends Component {
     };
   }
 
-  async componentWillMount() {
+  componentDidMount() {
     bindAll(this);
   }
 
@@ -79,8 +79,16 @@ export default class LoginScreen extends Component {
           />
 
           <View style={styles.contentButton}>
-            <Button title="Log In" onPress={() => this._login} />
-            <Button title="Sign Up" onPress={() => this._signUp()} />
+            <Button
+              style={styles.button}
+              title="Log In"
+              onPress={() => this._login}
+            />
+            <Button
+              style={styles.button}
+              title="Sign Up"
+              onPress={() => this._signUp()}
+            />
           </View>
         </View>
       );
@@ -90,11 +98,13 @@ export default class LoginScreen extends Component {
 const cw = Math.floor(sizes.WW * 0.9);
 const styles = StyleSheet.create({
   content: {
-    alignItems: "center",
+    alignContent: "stretch",
+    alignItems: "stretch",
     display: "flex",
     justifyContent: "center",
     height: "100%",
-    backgroundColor: colors.WHITE
+    backgroundColor: colors.WHITE,
+    padding: 16
   },
 
   contentButton: {
@@ -102,6 +112,10 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     display: "flex",
     justifyContent: "center"
+  },
+
+  button: {
+    marginBottom: 20
   },
 
   smallText: {

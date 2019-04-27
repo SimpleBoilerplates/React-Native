@@ -8,11 +8,16 @@
 "use strict";
 
 import React, { Component } from "react";
-import { StyleSheet } from "react-native";
 import { ListItem } from "react-native-elements";
 import { _get, _post } from "../shared/api/server";
 import bindAll, { basicState } from "../shared/util/Statehelper";
-import { Text, View, StyleSheet, ActivityIndicator,FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList
+} from "react-native";
 import { colors, sizes } from "../shared/constant/constant";
 
 export default class HomeScreen extends Component {
@@ -25,17 +30,13 @@ export default class HomeScreen extends Component {
       }
     };
   }
-  
+
   static navigationOptions = {
     title: "Books"
   };
 
-  
-  async componentWillMount() {
-    bindAll(this);
-  }
-
   componentDidMount() {
+    bindAll(this);
     this._getFood();
   }
 

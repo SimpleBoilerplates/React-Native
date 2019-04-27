@@ -24,7 +24,8 @@ export default class SignUpScreen extends Component {
     userName: "",
     password: ""
   };
-  async componentWillMount() {
+
+  componentDidMount() {
     bindAll(this);
   }
 
@@ -41,7 +42,7 @@ export default class SignUpScreen extends Component {
       password: this.state.password.toLowerCase()
     };
 
-    let [logerr, logged] = await to(axios.post(`${url}/signup`,payload));
+    let [logerr, logged] = await to(axios.post(`${url}/signup`, payload));
     this.notLoading();
     console.log(logerr, logged);
     if (logerr) {
@@ -61,6 +62,13 @@ export default class SignUpScreen extends Component {
     } else
       return (
         <View style={styles.content}>
+          <Text style={styles.smallText}>Name</Text>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={name => this.setState({ name })}
+            onBlur={e => Keyboard.dismiss()}
+          />
+
           <Text style={styles.smallText}>Username</Text>
           <TextInput
             style={styles.textInput}
@@ -76,8 +84,16 @@ export default class SignUpScreen extends Component {
           />
 
           <View style={styles.contentButton}>
-            <Button title="Sign Up" onPress={this._signUp} />
-            <Button title="Log In" onPress={() => this._login()} />
+            <Button
+              style={styles.button}
+              title="Sign Up"
+              onPress={this._signUp}
+            />
+            <Button
+              style={styles.button}
+              title="Log In"
+              onPress={() => this._login()}
+            />
           </View>
         </View>
       );
@@ -86,11 +102,13 @@ export default class SignUpScreen extends Component {
 const cw = Math.floor(sizes.WW * 0.9);
 const styles = StyleSheet.create({
   content: {
-    alignItems: "center",
+    alignContent: "stretch",
+    alignItems: "stretch",
     display: "flex",
     justifyContent: "center",
     height: "100%",
-    backgroundColor: colors.WHITE
+    backgroundColor: colors.WHITE,
+    padding: 16
   },
 
   contentButton: {
@@ -98,6 +116,10 @@ const styles = StyleSheet.create({
     alignItems: "stretch",
     display: "flex",
     justifyContent: "center"
+  },
+
+  button: {
+    marginBottom: 20
   },
 
   smallText: {
