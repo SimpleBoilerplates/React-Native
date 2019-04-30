@@ -8,21 +8,21 @@ import {
   StyleSheet,
   TextInput,
   Keyboard,
-  ActivityIndicator
+  ActivityIndicator,
+  Button
 } from "react-native";
 import bindAll, { basicState } from "../shared/util/Statehelper";
 import { colors, sizes } from "../shared/constant/constant";
 import { url } from "../shared/constant/credential";
 import axios from "axios";
 import to from "await-to-js";
-import { Button } from "react-native-elements";
 
 export default class LoginScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ...basicState,
-      userName: "",
+      email: "",
       password: ""
     };
   }
@@ -39,35 +39,36 @@ export default class LoginScreen extends Component {
     if (!this.state.userName && !this.state.password) return false;
     this.loading();
     let payload = {
-      email: this.state.userName.toLowerCase(),
-      password: this.state.password.toLowerCase()
+      email: this.state.email.toLowerCase(),
+      password: this.state.password
     };
 
-    let [logerr, logged] = await to(axios.post(`${url}/login`, payload));
+    let [error, result] = await to(axios.post(`${url}login`, payload));
+    console.log(error, JSON.stringify(result));
     this.notLoading();
-    console.log(logerr, logged);
-    if (logerr) {
-      alert("Username or password invalid");
+    if (error) {
+      alert(error.response);
     } else {
-      let saved = await AsyncStorage.setItem("token", tok);
-      this.props.navigation.navigate("Main");
+        await AsyncStorage.setItem("token", result.data.token);
+        this.props.navigation.navigate("Main");
+      
     }
   };
 
   render() {
     if (this.state.loading) {
       return (
-        <View style={styles.login}>
+        <View style={styles.content}>
           <ActivityIndicator size="large" color={colors.YELLOW} />
         </View>
       );
     } else {
       return (
         <View style={styles.content}>
-          <Text style={styles.smallText}>Username</Text>
+          <Text style={styles.smallText}>Email</Text>
           <TextInput
             style={styles.textInput}
-            onChangeText={userName => this.setState({ userName })}
+            onChangeText={email => this.setState({ email })}
             onBlur={e => Keyboard.dismiss()}
           />
           <Text style={styles.smallText}>Password</Text>
@@ -82,7 +83,7 @@ export default class LoginScreen extends Component {
             <Button
               style={styles.button}
               title="Log In"
-              onPress={() => this._login}
+              onPress={() => this._login()}
             />
             <Button
               style={styles.button}
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     fontSize: Math.floor(sizes.BASE_FONT * 1.3),
     padding: 8,
     width: cw,
-    color: colors.WHITE,
+    color: colors.BLACK,
     marginBottom: 20
   }
 });

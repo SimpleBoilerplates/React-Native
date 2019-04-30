@@ -8,7 +8,6 @@
 "use strict";
 
 import React, { Component } from "react";
-import { ListItem } from "react-native-elements";
 import { _get, _post } from "../shared/api/server";
 import bindAll, { basicState } from "../shared/util/Statehelper";
 import {
@@ -16,18 +15,33 @@ import {
   View,
   StyleSheet,
   ActivityIndicator,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from "react-native";
 import { colors, sizes } from "../shared/constant/constant";
+
+class MyListItem extends Component {
+  _onPress = () => {
+    this.props.onPressItem(this.props.id);
+  };
+
+  render() {
+    return (
+      <TouchableOpacity onPress={this._onPress}>
+        <View>
+          <Text>{this.props.title}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
 
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       ...basicState,
-      results: {
-        items: []
-      }
+      data: []
     };
   }
 
@@ -41,45 +55,59 @@ export default class HomeScreen extends Component {
   }
 
   _getFood = async () => {
-    console.log("_retrieveFood");
     let that = this;
     try {
       this.loading();
-      let value = await _get(`/books`);
-      if (value != null) {
-        console.log("_retrieveFood");
-        //console.log(value)
+      let result = await _get(`books`);
+      //console.log("_retrieveFood "+JSON.stringify(result));
+      if (result) {
         that.notLoading();
         that.setState({
-          results: JSON.parse(value)
+          data: result
         });
       }
     } catch (error) {
       console.log(error);
-      // Error retrieving data
     }
   };
 
-  keyExtractor = (item, index) => index.toString();
+  _keyExtractor = (item, index) => item.id;
+  _onPressItem = (id: string) => {
+    // updater functions are preferred for transactional updates
+    this.setState((state) => {
+      // copy the map rather than modifying state.
+      const selected = new Map(state.selected);
+      selected.set(id, !selected.get(id)); // toggle
+      return {selected};
+    });
+  };
+  _renderItem = ({item}) => (
+    <MyListItem
+      id={item.id}
+      onPressItem={this._onPressItem}
+      title={item.title}
+    />
+  );
 
-  renderItem = ({ item }) => <ListItem title={item.name} />;
 
   render() {
+    console.log(JSON.stringify(this.state.data))
     if (this.state.loading) {
       return (
         <View style={styles.content}>
-          <ActivityIndicator size="large" color={colors.YELLOW} />
+          <ActivityIndicator size="large" color={colors.BLUE} />
         </View>
       );
     } else {
       return (
         <View style={styles.listContainer}>
-          <FlatList
-            keyExtractor={this.keyExtractor}
-            data={this.state.results.items}
-            renderItem={this.renderItem}
-          />
-        </View>
+        <FlatList
+        data={this.state.data}
+        extraData={this.state}
+        keyExtractor={this._keyExtractor}
+        renderItem={this._renderItem}
+      />
+      </View>
       );
     }
   }
@@ -96,7 +124,11 @@ const styles = StyleSheet.create({
 
   listContainer: {
     display: "flex",
-    justifyContent: "center",
-    alignItems: "stretch"
+    backgroundColor: colors.WHITE,
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "stretch",
+    marginTop: 30,
+    padding: 16,
   }
 });
