@@ -33,6 +33,7 @@ This is a very simple Boilerplate application, this has following features.
  * [Visual Studio Code](https://code.visualstudio.com/)
  * [CodePush](https://github.com/Microsoft/react-native-code-push)
  * [Flow](https://github.com/facebook/flow)
+ * [Sonar Qube](https://www.sonarqube.org/) Continuous Code Quality
  * [React Developer Tools](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi)
  * [React Devtools](https://github.com/facebook/react-devtools/blob/master/packages/react-devtools/README.md)
  * [Reactotron](https://github.com/infinitered/reactotron)
