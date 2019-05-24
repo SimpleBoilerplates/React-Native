@@ -10,6 +10,7 @@ This is a very simple Boilerplate application, this has following features.
   ### Same implementation in other platforms
    - [Android](https://github.com/simpleboilerplates/BooksDemoAndroid) 
    - [iOS](https://github.com/simpleboilerplates/BooksDemoiOS) 
+   - [Flutter](https://github.com/SimpleBoilerplates/Flutter) 
    - [NodeJS backend](https://github.com/simpleboilerplates/BooksDemoNode) 
 
 
